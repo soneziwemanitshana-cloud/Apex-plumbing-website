@@ -1,0 +1,11 @@
+# Old drafts and local reference files — not part of the live site
+index.old.html
+index.v1-aurora.html
+*.jpeg
+dribbble.com_shots_*.png
+CLAUDE (2).md
+WEBSITE BUILDING/
+.tmp/
+.env
+credentials.json
+token.json

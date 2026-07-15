@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Plumbing Cape Town — 24/7 Plumbing, Geysers &amp; Home Maintenance</title>
+<meta name="description" content="Cape Town's trusted plumbing crew. Damien and the team answer the phone, arrive on time, and fix it right the first time. Emergency callouts, geysers, solar, drains, roofing &amp; renovations.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:      '#0D1440',
+          navy:     '#1B2F6A',
+          plum:     '#7B1A7C',
+          plumlite: '#C24FC0',
+          paper:    '#F7F7FC',
+          muted:    '#6B7094',
+        },
+        fontFamily: {
+          display: ['Sora', 'sans-serif'],
+          body:    ['Inter', 'sans-serif'],
+          mono:    ['"IBM Plex Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root { color-scheme: light; }
+  * { -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'Inter', sans-serif; background: #F7F7FC; color: #171B37; overflow-x: hidden; }
+  h1, h2, h3, .font-display { font-family: 'Sora', sans-serif; }
+  .font-mono { font-family: 'IBM Plex Mono', monospace; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+    outline: 2px solid #7B1A7C; outline-offset: 2px; border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal, .reveal-scale, .hero-stage { opacity: 1 !important; transform: none !important; }
+    .pipe-path { stroke-dashoffset: 0 !important; }
+  }
+
+  /* ================= signature: the pressure gauge =================
+     A fixed vertical gauge that fills with the brand gradient as the
+     visitor scrolls — "always under pressure, always on tap." */
+  #pressure-line {
+    position: fixed; left: 18px; top: 50%; transform: translateY(-50%);
+    width: 3px; height: min(38vh, 320px);
+    border-radius: 999px; background: rgba(13,20,64,0.08);
+    z-index: 45; display: none;
+    box-shadow: inset 0 0 0 1px rgba(13,20,64,0.04);
+  }
+  @media (min-width: 1024px) { #pressure-line { display: block; } }
+  #pressure-fill {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 0%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #C24FC0 0%, #7B1A7C 55%, #1B2F6A 100%);
+    transition: height 120ms linear;
+  }
+  #pressure-drop {
+    position: absolute; left: 50%; bottom: 0%; width: 13px; height: 13px;
+    transform: translate(-50%, 50%) rotate(45deg);
+    border-radius: 50% 50% 50% 4px;
+    background: #C24FC0;
+    box-shadow: 0 0 0 4px rgba(194,79,192,0.18), 0 4px 12px -2px rgba(123,26,124,0.6);
+    transition: bottom 120ms linear;
+  }
+  #pressure-label {
+    position: absolute; left: 50%; top: -14px; transform: translateX(-50%) rotate(180deg);
+    writing-mode: vertical-rl; font-size: 9px; letter-spacing: 0.25em;
+    color: rgba(13,20,64,0.35); font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ================= header scroll progress ================= */
+  #scroll-progress {
+    position: absolute; left: 0; bottom: -1px; height: 2px; width: 0%;
+    background: linear-gradient(90deg, #7B1A7C, #C24FC0);
+  }
+  #site-header { transition: box-shadow 300ms ease; }
+  #site-header.is-scrolled { box-shadow: 0 8px 30px -18px rgba(13,20,64,0.35); }
+
+  /* ================= hero ================= */
+  .hero-stage {
+    opacity: 0; transform: translateY(26px);
+    animation: hero-in 850ms cubic-bezier(.16,.8,.24,1) forwards;
+    animation-delay: var(--stage, 0ms);
+  }
+  @keyframes hero-in { to { opacity: 1; transform: translateY(0); } }
+
+  #hero-bubbles { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+
+  .hero-sheen {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(90% 70% at 85% 15%, rgba(123,26,124,0.35), transparent 60%),
+      radial-gradient(70% 60% at 10% 90%, rgba(27,47,106,0.55), transparent 65%);
+    animation: sheen-drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes sheen-drift {
+    from { transform: translate3d(0,0,0) scale(1); }
+    to   { transform: translate3d(-2%,2%,0) scale(1.06); }
+  }
+
+  .gradient-text {
+    background: linear-gradient(100deg, #C24FC0, #E9A6E8, #C24FC0);
+    background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: gradient-flow 7s ease-in-out infinite;
+  }
+  @keyframes gradient-flow { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+
+  .help-card { animation: float-y 5s ease-in-out infinite; }
+  .badge-float { animation: float-y 4.2s ease-in-out infinite; animation-delay: .3s; }
+  @keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  /* ================= glass surfaces ================= */
+  .glass-light {
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(13,20,64,0.07);
+  }
+
+  /* ================= scroll reveal ================= */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 700ms cubic-bezier(.16,.8,.24,1), transform 700ms cubic-bezier(.16,.8,.24,1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-scale { opacity: 0; transform: scale(0.95); transition: opacity 700ms ease, transform 700ms ease; transition-delay: var(--reveal-delay, 0ms); }
+  .reveal-scale.is-visible { opacity: 1; transform: scale(1); }
+
+  /* ================= cards ================= */
+  .card-lift { transition: transform 350ms cubic-bezier(.16,.8,.24,1), box-shadow 350ms ease; }
+  .card-lift:hover { transform: translateY(-6px); box-shadow: 0 28px 55px -25px rgba(13,20,64,0.35); }
+
+  .service-card { transition: transform 350ms cubic-bezier(.16,.8,.24,1), box-shadow 350ms ease, border-color 350ms ease; }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(123,26,124,0.35); box-shadow: 0 28px 55px -28px rgba(123,26,124,0.4); }
+  .service-card .svc-arrow { opacity: 0; transform: translateX(-6px); transition: opacity 250ms ease, transform 250ms ease; }
+  .service-card:hover .svc-arrow { opacity: 1; transform: translateX(0); }
+  .service-card .svc-icon { transition: transform 350ms cubic-bezier(.34,1.56,.64,1), background 350ms ease; }
+  .service-card:hover .svc-icon { transform: scale(1.12) rotate(-4deg); }
+
+  /* ================= process pipe ================= */
+  .pipe-path {
+    stroke: url(#flowGradient); stroke-width: 3; fill: none; stroke-linecap: round;
+    stroke-dasharray: 1200; stroke-dashoffset: 1200;
+  }
+  .pipe-on .pipe-path { transition: stroke-dashoffset 1600ms cubic-bezier(.4,0,.2,1); stroke-dashoffset: 0; }
+  .pipe-dot { fill: #fff; stroke: #7B1A7C; stroke-width: 3; opacity: 0; transition: opacity 300ms ease; }
+  .pipe-on .pipe-dot { opacity: 1; }
+  .pipe-on .pipe-dot:nth-of-type(2) { transition-delay: 400ms; }
+  .pipe-on .pipe-dot:nth-of-type(3) { transition-delay: 800ms; }
+  .pipe-on .pipe-dot:nth-of-type(4) { transition-delay: 1200ms; }
+  .pipe-on .pipe-dot:nth-of-type(5) { transition-delay: 1600ms; }
+
+  /* ================= marquees ================= */
+  .marquee-track { display: flex; width: max-content; animation: scroll-left 32s linear infinite; }
+  .marquee-track-slow { display: flex; width: max-content; animation: scroll-left 55s linear infinite; }
+  .marquee-wrap:hover .marquee-track, .marquee-wrap:hover .marquee-track-slow { animation-play-state: paused; }
+  @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ================= status pill ================= */
+  .status-dot { position: relative; }
+  .status-dot::before {
+    content: ""; position: absolute; inset: -4px; border-radius: 50%;
+    border: 1.5px solid rgba(46,204,113,0.5);
+    animation: pulse-ring-soft 2.4s ease-out infinite;
+  }
+  @keyframes pulse-ring-soft { 0% { transform: scale(0.6); opacity: .8; } 100% { transform: scale(1.8); opacity: 0; } }
+
+  /* ================= button ripple ================= */
+  .btn-ripple { position: relative; overflow: hidden; }
+  .ripple-el {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    background: rgba(255,255,255,0.35); transform: scale(0);
+    animation: ripple-grow 600ms ease-out forwards;
+  }
+  @keyframes ripple-grow { to { transform: scale(1); opacity: 0; } }
+
+  .pulse-ring { position: relative; }
+  .pulse-ring::after {
+    content: ""; position: absolute; inset: 0; border-radius: 999px;
+    box-shadow: 0 0 0 0 rgba(123,26,124,0.45);
+    animation: pulse-cta 2.2s ease-out infinite;
+  }
+  @keyframes pulse-cta { 0% { box-shadow: 0 0 0 0 rgba(123,26,124,0.45); } 100% { box-shadow: 0 0 0 14px rgba(123,26,124,0); } }
+
+  /* ================= FAQ ================= */
+  .faq-item { border: 1px solid rgba(13,20,64,0.08); transition: border-color 250ms ease, box-shadow 250ms ease; }
+  .faq-item[open] { border-color: rgba(123,26,124,0.3); box-shadow: 0 15px 40px -25px rgba(123,26,124,0.35); }
+  .faq-item summary { cursor: pointer; list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-chevron { transition: transform 300ms cubic-bezier(.34,1.56,.64,1), background 250ms ease; }
+  .faq-item[open] .faq-chevron { transform: rotate(45deg); background: #7B1A7C; color: #fff; }
+  .faq-item .faq-body { animation: faq-open 350ms cubic-bezier(.16,.8,.24,1); }
+  @keyframes faq-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ================= grain for dark sections ================= */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05; mix-blend-mode: overlay; pointer-events: none; z-index: 1;
+  }
+  .grain > * { position: relative; z-index: 2; }
+
+  .photo-tint { background: linear-gradient(180deg, rgba(13,20,64,0) 40%, rgba(13,20,64,0.55) 100%); }
+
+  /* ================= floating call button (mobile) ================= */
+  #float-call {
+    position: fixed; right: 16px; bottom: 16px; z-index: 50;
+    opacity: 0; transform: translateY(20px) scale(0.9); pointer-events: none;
+    transition: opacity 300ms ease, transform 300ms cubic-bezier(.34,1.56,.64,1);
+  }
+  #float-call.is-on { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  @media (min-width: 1024px) { #float-call { display: none; } }
+</style>
+</head>
+
+<body class="bg-paper text-[#171B37] antialiased">
+
+<!-- signature scroll gauge -->
+<div id="pressure-line" aria-hidden="true">
+  <span id="pressure-label">ON TAP</span>
+  <div id="pressure-fill"></div>
+  <div id="pressure-drop"></div>
+</div>
+
+<!-- floating call button (mobile) -->
+<a id="float-call" href="tel:+27717933414" aria-label="Call Apex Plumbing now" class="btn-ripple pulse-ring flex items-center gap-2 bg-plum text-white font-semibold text-sm pl-4 pr-5 py-3 rounded-full shadow-[0_18px_40px_-12px_rgba(123,26,124,0.65)]">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  Call now
+</a>
+
+<!-- ================= STATUS BAR ================= -->
+<div class="bg-ink text-white/90 font-mono text-[11px] sm:text-xs tracking-wide">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-3">
+    <p class="flex items-center gap-2 truncate">
+      <span class="status-dot relative flex h-1.5 w-1.5 shrink-0 rounded-full bg-[#2ECC71]"></span>
+      <span class="hidden sm:inline">ON CALL NOW · CAPE TOWN <span id="live-clock" class="text-plumlite/90"></span></span>
+      <span class="sm:hidden">ON CALL 24/7</span>
+    </p>
+    <a href="tel:+27717933414" class="shrink-0 hover:text-plumlite transition-colors duration-200">071 793 3414</a>
+  </div>
+</div>
+
+<!-- ================= NAV ================= -->
+<header id="site-header" class="sticky top-0 z-40 bg-paper/85 backdrop-blur-md border-b border-navy/10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between relative">
+    <a href="#top" class="flex items-center gap-2.5 group">
+      <img src="brand_assets/logo-icon.png" alt="Apex Plumbing Cape Town logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover shrink-0 transition-transform duration-300 group-hover:scale-105">
+      <span class="font-display text-[15px] sm:text-base leading-none tracking-tight">
+        <span class="block font-semibold text-ink">APEX PLUMBING</span>
+        <span class="block font-mono text-[9px] sm:text-[10px] tracking-[0.18em] text-muted font-normal">CAPE&nbsp;TOWN</span>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-navy/80">
+      <a href="#services" class="hover:text-plum transition-colors duration-200">Services</a>
+      <a href="#process" class="hover:text-plum transition-colors duration-200">How it works</a>
+      <a href="#reviews" class="hover:text-plum transition-colors duration-200">Reviews</a>
+      <a href="#tips" class="hover:text-plum transition-colors duration-200">Tips</a>
+      <a href="#faq" class="hover:text-plum transition-colors duration-200">FAQ</a>
+      <a href="#contact" class="hover:text-plum transition-colors duration-200">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="tel:+27717933414" class="hidden sm:flex items-center gap-1.5 font-mono text-sm text-ink font-medium hover:text-plum transition-colors duration-200">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        071 793 3414
+      </a>
+      <a href="#contact" class="btn-ripple bg-plum text-white text-sm font-semibold px-4 sm:px-5 py-2.5 rounded-full shadow-[0_10px_30px_-10px_rgba(123,26,124,0.6)] hover:bg-navy hover:shadow-[0_10px_30px_-10px_rgba(27,47,106,0.6)] active:scale-[0.97] transition-all duration-200">
+        Book a visit
+      </a>
+      <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-navy/15 text-ink">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <div id="scroll-progress" aria-hidden="true"></div>
+  </div>
+
+  <nav id="mobile-menu" class="md:hidden overflow-hidden max-h-0 opacity-0 border-t border-navy/10 bg-paper transition-all duration-300">
+    <div class="px-4 sm:px-6 py-4 flex flex-col gap-1 font-medium text-sm text-navy/80">
+      <a href="#services" class="py-2.5 border-b border-navy/5">Services</a>
+      <a href="#process" class="py-2.5 border-b border-navy/5">How it works</a>
+      <a href="#reviews" class="py-2.5 border-b border-navy/5">Reviews</a>
+      <a href="#tips" class="py-2.5 border-b border-navy/5">Tips</a>
+      <a href="#faq" class="py-2.5 border-b border-navy/5">FAQ</a>
+      <a href="#contact" class="py-2.5">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="relative overflow-hidden grain bg-gradient-to-br from-ink via-navy to-ink">
+  <div class="hero-sheen" aria-hidden="true"></div>
+  <canvas id="hero-bubbles" aria-hidden="true"></canvas>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-14 pb-24 sm:pt-20 sm:pb-24 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+    <div>
+      <div class="hero-stage inline-flex items-center gap-2 bg-white/8 border border-white/15 rounded-full pl-1.5 pr-3.5 py-1.5 mb-6" style="--stage:0ms">
+        <span class="w-6 h-6 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span class="font-mono text-[11px] tracking-[0.15em] text-white/85 uppercase">
+          <span class="hidden sm:inline">Cape Town · Licensed &amp; Insured · 10+ yrs</span>
+          <span class="sm:hidden">Cape Town · Licensed &amp; Insured</span>
+        </span>
+      </div>
+
+      <h1 class="hero-stage font-display font-bold text-white leading-[1.04] tracking-tight text-[clamp(2.3rem,5.4vw,3.9rem)]" style="--stage:120ms">
+        Cape Town's trusted<br>
+        <span class="gradient-text">plumbing</span> &amp; home experts.
+      </h1>
+
+      <p class="hero-stage text-white/60 text-base sm:text-lg leading-[1.7] mt-6 max-w-md" style="--stage:260ms">
+        Burst pipe at 2am or a geyser that's finally given up — a real person answers, no call centre, and the crew is usually on your street inside the hour.
+      </p>
+
+      <div class="hero-stage flex flex-wrap gap-3 mt-9" style="--stage:400ms">
+        <a href="tel:+27717933414" class="btn-ripple pulse-ring inline-flex items-center gap-2 bg-plum text-white font-semibold px-6 py-3.5 rounded-full shadow-[0_20px_45px_-15px_rgba(123,26,124,0.55)] hover:bg-plumlite active:scale-[0.97] transition-all duration-200">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Damien now
+        </a>
+        <a href="#contact" class="btn-ripple inline-flex items-center gap-2 border border-white/25 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-white/10 active:scale-[0.97] transition-all duration-200">
+          Get a free quote
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- animated stats -->
+      <div class="hero-stage grid grid-cols-3 gap-4 mt-12 max-w-md" style="--stage:540ms">
+        <div class="border-l-2 border-plumlite/40 pl-4">
+          <p class="font-display font-bold text-white text-2xl sm:text-3xl"><span class="counter" data-count="45" data-suffix="">45</span><span class="text-plumlite text-lg">min</span></p>
+          <p class="font-mono text-[10px] tracking-wide text-white/45 mt-1 uppercase">Avg arrival</p>
+        </div>
+        <div class="border-l-2 border-plumlite/40 pl-4">
+          <p class="font-display font-bold text-white text-2xl sm:text-3xl"><span class="counter" data-count="4.9" data-decimals="1">4.9</span><span class="text-plumlite text-lg">★</span></p>
+          <p class="font-mono text-[10px] tracking-wide text-white/45 mt-1 uppercase">Rated locally</p>
+        </div>
+        <div class="border-l-2 border-plumlite/40 pl-4">
+          <p class="font-display font-bold text-white text-2xl sm:text-3xl"><span class="counter" data-count="10">10</span><span class="text-plumlite text-lg">+yrs</span></p>
+          <p class="font-mono text-[10px] tracking-wide text-white/45 mt-1 uppercase">On the tools</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- hero visual -->
+    <div class="hero-stage relative" style="--stage:300ms">
+      <div class="relative rounded-[1.75rem] overflow-hidden aspect-[4/5] sm:aspect-[5/4.5] shadow-[0_40px_90px_-30px_rgba(2,6,23,0.75)] bg-gradient-to-br from-navy to-ink">
+        <img src="brand_assets/crew-portrait.jpg" alt="Damien, owner of Apex Plumbing Cape Town" class="absolute inset-0 w-full h-full object-cover object-top">
+        <div class="absolute inset-0 photo-tint"></div>
+      </div>
+
+      <!-- logo badge -->
+      <div class="badge-float absolute top-5 right-5 sm:-right-5 glass-light rounded-2xl shadow-[0_15px_35px_-15px_rgba(2,6,23,0.6)] px-3.5 py-2.5 flex items-center gap-2">
+        <img src="brand_assets/logo-icon.png" alt="" class="w-7 h-7 rounded-full object-cover" aria-hidden="true">
+        <span class="font-display font-bold text-ink text-[11px] leading-none">APEX<br><span class="font-normal text-muted text-[9px] tracking-wide">PLUMBING</span></span>
+      </div>
+
+      <!-- help card -->
+      <div class="help-card absolute -bottom-8 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:-right-4 w-[88%] sm:w-72 glass-light rounded-2xl p-5 shadow-[0_25px_60px_-20px_rgba(2,6,23,0.55)]">
+        <p class="font-display font-bold text-ink text-[15px] leading-snug">Need immediate plumbing help?</p>
+        <p class="text-muted text-xs leading-relaxed mt-1.5">24/7 emergency plumbing &amp; heating callouts across Cape Town.</p>
+        <a href="tel:+27717933414" class="btn-ripple mt-4 flex items-center justify-center gap-2 bg-plum text-white text-sm font-semibold py-2.5 rounded-full hover:bg-navy active:scale-[0.97] transition-all duration-200">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          071 793 3414
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- suburb marquee -->
+  <div class="marquee-wrap relative z-10 border-t border-white/10 bg-white/[0.03] overflow-hidden py-3.5 mt-8">
+    <div class="marquee-track font-mono text-xs tracking-wide text-white/45">
+      <span class="flex items-center gap-8 pr-8">
+        <span>Sea Point</span><span class="text-plumlite/50">·</span>
+        <span>Camps Bay</span><span class="text-plumlite/50">·</span>
+        <span>Claremont</span><span class="text-plumlite/50">·</span>
+        <span>Constantia</span><span class="text-plumlite/50">·</span>
+        <span>Century City</span><span class="text-plumlite/50">·</span>
+        <span>Bellville</span><span class="text-plumlite/50">·</span>
+        <span>Table View</span><span class="text-plumlite/50">·</span>
+        <span>Muizenberg</span><span class="text-plumlite/50">·</span>
+        <span>Green Point</span><span class="text-plumlite/50">·</span>
+        <span>Durbanville</span><span class="text-plumlite/50">·</span>
+      </span>
+      <span class="flex items-center gap-8 pr-8" aria-hidden="true">
+        <span>Sea Point</span><span class="text-plumlite/50">·</span>
+        <span>Camps Bay</span><span class="text-plumlite/50">·</span>
+        <span>Claremont</span><span class="text-plumlite/50">·</span>
+        <span>Constantia</span><span class="text-plumlite/50">·</span>
+        <span>Century City</span><span class="text-plumlite/50">·</span>
+        <span>Bellville</span><span class="text-plumlite/50">·</span>
+        <span>Table View</span><span class="text-plumlite/50">·</span>
+        <span>Muizenberg</span><span class="text-plumlite/50">·</span>
+        <span>Green Point</span><span class="text-plumlite/50">·</span>
+        <span>Durbanville</span><span class="text-plumlite/50">·</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
+  <div class="max-w-xl mb-14 reveal">
+    <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">What we fix</p>
+    <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">Our plumbing &amp; home services.</h2>
+    <p class="text-muted text-base leading-[1.7] mt-4">Everything below is a real call we get every week — from a dripping tap to a full renovation.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:0ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">24/7 Emergency Assistance</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">After-hours crew on standby for what can't wait.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:70ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 22v-6M4 12h4M16 12h4"/><circle cx="12" cy="12" r="4"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Geyser Repair &amp; Installations</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Same-day callouts, replacements, pressure valve fixes.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:140ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Solar Repair &amp; Installations</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Solar geyser and water-heating installs &amp; servicing.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:210ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12a4 4 0 0 1 8 0c0 2-4 3-4 6"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Blocked Drains</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Camera inspection and clearing, gullies to sewer.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:0ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a4 4 0 0 1-4.8 5.8L7 22l-2-2 11-11-2.8-2.8a1 1 0 0 0 0 1.4Z"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">General Maintenance</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Ongoing upkeep for homes and body corporates.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:70ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 4l9 8M5 10v10h14V10"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Roofing</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Leak repairs, waterproofing, roof maintenance.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:140ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3-1 3 1 6 0s3 1 6 0 3 1 6 0M7 17l8-8 3 3-8 8H7v-3z"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Painting</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Interior and exterior, often paired with maintenance.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+
+    <a href="#contact" class="service-card reveal bg-white rounded-2xl border border-navy/8 p-6 flex flex-col" style="--reveal-delay:210ms">
+      <span class="svc-icon w-12 h-12 rounded-xl bg-plum/8 flex items-center justify-center mb-5">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg>
+      </span>
+      <h3 class="font-display font-semibold text-base text-ink">Bathroom &amp; Kitchen Renovations</h3>
+      <p class="text-muted text-sm leading-[1.6] mt-2 flex-1">Full renovation plumbing, planned properly.</p>
+      <span class="svc-arrow mt-4 inline-flex items-center gap-1.5 text-plum text-sm font-medium">Book now
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- ================= MEET DAMIEN ================= -->
+<section class="bg-white border-y border-navy/8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 grid sm:grid-cols-[auto_1fr] gap-8 items-center reveal">
+    <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto sm:mx-0 shrink-0">
+      <div class="absolute -inset-1.5 rounded-full bg-gradient-to-br from-plum to-navy"></div>
+      <img src="brand_assets/crew-portrait.jpg" alt="Damien, owner of Apex Plumbing" class="relative w-full h-full rounded-full object-cover object-top border-4 border-white">
+    </div>
+    <div>
+      <p class="font-display text-xl sm:text-2xl text-ink leading-snug">
+        "It's me or my crew on the other end of that phone — never a call centre, never a runaround."
+      </p>
+      <p class="font-mono text-xs text-muted mt-4 tracking-wide">DAMIEN — OWNER, APEX PLUMBING CAPE TOWN</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST STRIP ================= -->
+<section class="bg-paper relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <div class="max-w-xl mb-12 reveal">
+      <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">Why Cape Town calls us</p>
+      <h2 class="font-display font-bold text-2xl sm:text-3xl text-ink tracking-tight">Professionals. Fast response. Fair pricing.</h2>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <figure class="reveal card-lift bg-white rounded-2xl overflow-hidden border border-navy/8 shadow-[0_8px_30px_-15px_rgba(27,47,106,0.15)]" style="--reveal-delay:0ms">
+        <div class="aspect-square overflow-hidden">
+          <img src="brand_assets/trust-professionals.jpg" alt="An Apex Plumbing technician, ready for the job" class="w-full h-full object-cover">
+        </div>
+        <figcaption class="p-4">
+          <p class="font-display font-semibold text-ink text-sm">Professionals</p>
+          <p class="text-muted text-xs mt-1">10+ yrs licensed &amp; insured</p>
+        </figcaption>
+      </figure>
+      <figure class="reveal card-lift bg-white rounded-2xl overflow-hidden border border-navy/8 shadow-[0_8px_30px_-15px_rgba(27,47,106,0.15)]" style="--reveal-delay:80ms">
+        <div class="aspect-square overflow-hidden">
+          <img src="brand_assets/trust-response.jpg" alt="Apex Plumbing crew responding on site" class="w-full h-full object-cover">
+        </div>
+        <figcaption class="p-4">
+          <p class="font-display font-semibold text-ink text-sm">Response</p>
+          <p class="text-muted text-xs mt-1">45-min average arrival</p>
+        </figcaption>
+      </figure>
+      <figure class="reveal card-lift bg-white rounded-2xl overflow-hidden border border-navy/8 shadow-[0_8px_30px_-15px_rgba(27,47,106,0.15)]" style="--reveal-delay:160ms">
+        <div class="aspect-square overflow-hidden">
+          <img src="brand_assets/trust-satisfaction.jpg" alt="A clean, finished plumbing job" class="w-full h-full object-cover">
+        </div>
+        <figcaption class="p-4">
+          <p class="font-display font-semibold text-ink text-sm">Satisfaction</p>
+          <p class="text-muted text-xs mt-1">4.9★ rated locally</p>
+        </figcaption>
+      </figure>
+      <figure class="reveal card-lift bg-white rounded-2xl overflow-hidden border border-navy/8 shadow-[0_8px_30px_-15px_rgba(27,47,106,0.15)]" style="--reveal-delay:240ms">
+        <div class="aspect-square overflow-hidden">
+          <img src="brand_assets/trust-pricing.jpg" alt="Apex Plumbing team on a job site" class="w-full h-full object-cover">
+        </div>
+        <figcaption class="p-4">
+          <p class="font-display font-semibold text-ink text-sm">Pricing</p>
+          <p class="text-muted text-xs mt-1">Upfront, no surprises</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section id="process" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
+  <div class="max-w-xl mb-16 reveal">
+    <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">How it works</p>
+    <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">From "help" to fixed, in four steps.</h2>
+  </div>
+
+  <div id="pipe-wrap" class="relative">
+    <svg class="hidden lg:block absolute top-6 left-0 w-full h-4" viewBox="0 0 1200 20" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#C24FC0"/>
+          <stop offset="50%" stop-color="#7B1A7C"/>
+          <stop offset="100%" stop-color="#1B2F6A"/>
+        </linearGradient>
+      </defs>
+      <path class="pipe-path" d="M60 10 L1140 10"/>
+      <circle class="pipe-dot" cx="60" cy="10" r="5"/>
+      <circle class="pipe-dot" cx="420" cy="10" r="5"/>
+      <circle class="pipe-dot" cx="780" cy="10" r="5"/>
+      <circle class="pipe-dot" cx="1140" cy="10" r="5"/>
+    </svg>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 relative lg:pt-14">
+      <div class="reveal" style="--reveal-delay:0ms">
+        <p class="font-mono text-plum text-sm mb-3">01</p>
+        <h3 class="font-display font-semibold text-lg text-ink mb-2">Call or WhatsApp Damien</h3>
+        <p class="text-muted text-sm leading-[1.7]">Tell us what's wrong — no phone tree, straight to the person coming out.</p>
+      </div>
+      <div class="reveal" style="--reveal-delay:100ms">
+        <p class="font-mono text-plum text-sm mb-3">02</p>
+        <h3 class="font-display font-semibold text-lg text-ink mb-2">We diagnose on site</h3>
+        <p class="text-muted text-sm leading-[1.7]">Same-day visits for most of Cape Town, sooner for emergencies.</p>
+      </div>
+      <div class="reveal" style="--reveal-delay:200ms">
+        <p class="font-mono text-plum text-sm mb-3">03</p>
+        <h3 class="font-display font-semibold text-lg text-ink mb-2">Upfront price, before we start</h3>
+        <p class="text-muted text-sm leading-[1.7]">You approve the quote before any work begins. No surprise invoices.</p>
+      </div>
+      <div class="reveal" style="--reveal-delay:300ms">
+        <p class="font-mono text-plum text-sm mb-3">04</p>
+        <h3 class="font-display font-semibold text-lg text-ink mb-2">Fixed right, guaranteed</h3>
+        <p class="text-muted text-sm leading-[1.7]">Workmanship backed for 12 months on every completed job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="reviews" class="grain bg-ink relative overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-plum/15 blur-[140px] rounded-full"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 relative">
+    <div class="max-w-xl mb-14 reveal">
+      <p class="font-mono text-[11px] tracking-[0.25em] text-plumlite uppercase mb-3">Cape Town homes</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight">What our clients say.</h2>
+    </div>
+  </div>
+
+  <div class="marquee-wrap relative overflow-hidden pb-20 sm:pb-28 reveal">
+    <div class="marquee-track-slow gap-6 px-4 sm:px-6">
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Geyser burst on a Sunday night. Damien was at the house in 40 minutes and had it sorted before I'd finished mopping up."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">R</span>
+          <p class="font-mono text-xs text-white/50">R. Adams, Claremont</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Quoted upfront, stuck to the price, cleaned up after. Rare to find a plumber who does all three."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">S</span>
+          <p class="font-mono text-xs text-white/50">S. Naidoo, Century City</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Full repipe on an old Sea Point flat. Explained every step, no drama, no hidden costs. Would use again."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">L</span>
+          <p class="font-mono text-xs text-white/50">L. Botha, Sea Point</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Solar geyser stopped heating mid-winter. They diagnosed it same day and had parts sourced by the next morning."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">M</span>
+          <p class="font-mono text-xs text-white/50">M. Petersen, Durbanville</p>
+        </footer>
+      </blockquote>
+      <!-- duplicate set for seamless loop -->
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur" aria-hidden="true">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Geyser burst on a Sunday night. Damien was at the house in 40 minutes and had it sorted before I'd finished mopping up."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">R</span>
+          <p class="font-mono text-xs text-white/50">R. Adams, Claremont</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur" aria-hidden="true">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Quoted upfront, stuck to the price, cleaned up after. Rare to find a plumber who does all three."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">S</span>
+          <p class="font-mono text-xs text-white/50">S. Naidoo, Century City</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur" aria-hidden="true">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Full repipe on an old Sea Point flat. Explained every step, no drama, no hidden costs. Would use again."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">L</span>
+          <p class="font-mono text-xs text-white/50">L. Botha, Sea Point</p>
+        </footer>
+      </blockquote>
+      <blockquote class="card-lift w-[320px] shrink-0 rounded-2xl p-7 bg-white/[0.06] border border-white/10 backdrop-blur" aria-hidden="true">
+        <p class="text-plumlite text-sm mb-4">★★★★★</p>
+        <p class="text-white text-[15px] leading-[1.7]">"Solar geyser stopped heating mid-winter. They diagnosed it same day and had parts sourced by the next morning."</p>
+        <footer class="flex items-center gap-3 mt-5">
+          <span class="w-8 h-8 rounded-full bg-gradient-to-br from-plum to-plumlite flex items-center justify-center text-white text-xs font-semibold">M</span>
+          <p class="font-mono text-xs text-white/50">M. Petersen, Durbanville</p>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICE AREA ================= -->
+<section id="area" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
+  <div class="max-w-xl mb-10 reveal">
+    <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">Where we work</p>
+    <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">Covering greater Cape Town.</h2>
+  </div>
+  <div class="flex flex-wrap gap-2.5 reveal">
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Sea Point</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Camps Bay</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Green Point</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Claremont</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Constantia</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Century City</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Bellville</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Table View</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Muizenberg</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">Durbanville</span>
+    <span class="font-mono text-xs bg-white border border-navy/10 text-navy px-4 py-2 rounded-full hover:border-plum/40 hover:text-plum transition-colors duration-200">+ surrounds</span>
+  </div>
+</section>
+
+<!-- ================= TIPS / BLOG ================= -->
+<section id="tips" class="bg-white border-y border-navy/8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
+    <div class="max-w-xl mb-14 reveal">
+      <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">From the crew</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">Expert plumbing tips &amp; advice.</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <article class="reveal card-lift group relative rounded-2xl overflow-hidden aspect-[4/5]" style="--reveal-delay:0ms">
+        <img src="brand_assets/tip-drains.jpg" alt="Kitchen sink and drain" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-5">
+          <p class="font-mono text-[10px] tracking-[0.2em] text-plumlite uppercase mb-2">Drains</p>
+          <h3 class="font-display font-semibold text-[15px] text-white leading-snug mb-1.5">Blocked drain? Here's what to do first.</h3>
+          <p class="text-white/60 text-xs leading-[1.6] max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300">Three things to try before you reach for the chemical cleaner.</p>
+        </div>
+      </article>
+
+      <article class="reveal card-lift group relative rounded-2xl overflow-hidden aspect-[4/5]" style="--reveal-delay:80ms">
+        <img src="brand_assets/tip-geysers.jpg" alt="Apex Plumbing crew on a geyser callout" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-5">
+          <p class="font-mono text-[10px] tracking-[0.2em] text-plumlite uppercase mb-2">Geysers</p>
+          <h3 class="font-display font-semibold text-[15px] text-white leading-snug mb-1.5">5 signs your geyser is about to fail.</h3>
+          <p class="text-white/60 text-xs leading-[1.6] max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300">Rusty water and popping sounds are your early warning.</p>
+        </div>
+      </article>
+
+      <article class="reveal card-lift group relative rounded-2xl overflow-hidden aspect-[4/5]" style="--reveal-delay:160ms">
+        <img src="brand_assets/tip-winter.jpg" alt="Apex Plumbing technician at work" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-5">
+          <p class="font-mono text-[10px] tracking-[0.2em] text-plumlite uppercase mb-2">Winter</p>
+          <h3 class="font-display font-semibold text-[15px] text-white leading-snug mb-1.5">How to prevent burst pipes in winter.</h3>
+          <p class="text-white/60 text-xs leading-[1.6] max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300">Cape Town cold snaps catch old copper off guard.</p>
+        </div>
+      </article>
+
+      <article class="reveal card-lift group relative rounded-2xl overflow-hidden aspect-[4/5]" style="--reveal-delay:240ms">
+        <img src="brand_assets/tip-emergency.jpg" alt="Damien, owner of Apex Plumbing" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-5">
+          <p class="font-mono text-[10px] tracking-[0.2em] text-plumlite uppercase mb-2">Emergencies</p>
+          <h3 class="font-display font-semibold text-[15px] text-white leading-snug mb-1.5">What counts as a plumbing emergency?</h3>
+          <p class="text-white/60 text-xs leading-[1.6] max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-300">A quick guide to what warrants an after-hours callout.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
+  <div class="max-w-xl mb-12 reveal">
+    <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">Got questions?</p>
+    <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">Frequently asked questions.</h2>
+  </div>
+
+  <div class="space-y-2.5 reveal">
+    <details class="faq-item group bg-white rounded-xl px-5 py-1" open>
+      <summary class="flex items-center justify-between gap-4 py-4">
+        <span class="font-display font-semibold text-ink text-base sm:text-lg">Do you offer 24/7 emergency plumbing?</span>
+        <span class="faq-chevron shrink-0 w-7 h-7 rounded-full bg-plum/10 text-plum flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </summary>
+      <p class="faq-body text-muted text-sm leading-[1.7] pb-4 pr-10">Yes. Damien and the on-call crew take turns covering the phone, day and night, so you always reach a real person — never a call centre — and the crew typically reaches most of Cape Town within 45 minutes for genuine emergencies.</p>
+    </details>
+
+    <details class="faq-item group bg-white rounded-xl px-5 py-1">
+      <summary class="flex items-center justify-between gap-4 py-4">
+        <span class="font-display font-semibold text-ink text-base sm:text-lg">Do you give a quote before starting work?</span>
+        <span class="faq-chevron shrink-0 w-7 h-7 rounded-full bg-plum/10 text-plum flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </summary>
+      <p class="faq-body text-muted text-sm leading-[1.7] pb-4 pr-10">Always. You'll get an upfront price after we've diagnosed the problem on site, and nothing starts until you approve it — no surprise invoices.</p>
+    </details>
+
+    <details class="faq-item group bg-white rounded-xl px-5 py-1">
+      <summary class="flex items-center justify-between gap-4 py-4">
+        <span class="font-display font-semibold text-ink text-base sm:text-lg">Do you handle anything beyond plumbing?</span>
+        <span class="faq-chevron shrink-0 w-7 h-7 rounded-full bg-plum/10 text-plum flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </summary>
+      <p class="faq-body text-muted text-sm leading-[1.7] pb-4 pr-10">Yes — alongside plumbing, geysers and solar, the crew also handles blocked drains, general maintenance, roofing, painting and full bathroom or kitchen renovations.</p>
+    </details>
+
+    <details class="faq-item group bg-white rounded-xl px-5 py-1">
+      <summary class="flex items-center justify-between gap-4 py-4">
+        <span class="font-display font-semibold text-ink text-base sm:text-lg">What areas of Cape Town do you cover?</span>
+        <span class="faq-chevron shrink-0 w-7 h-7 rounded-full bg-plum/10 text-plum flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </summary>
+      <p class="faq-body text-muted text-sm leading-[1.7] pb-4 pr-10">Sea Point, Camps Bay, Green Point, Claremont, Constantia, Century City, Bellville, Table View, Muizenberg, Durbanville and the surrounding suburbs. Not sure if you're covered? Just call.</p>
+    </details>
+
+    <details class="faq-item group bg-white rounded-xl px-5 py-1">
+      <summary class="flex items-center justify-between gap-4 py-4">
+        <span class="font-display font-semibold text-ink text-base sm:text-lg">Is Apex Plumbing licensed and insured?</span>
+        <span class="faq-chevron shrink-0 w-7 h-7 rounded-full bg-plum/10 text-plum flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </summary>
+      <p class="faq-body text-muted text-sm leading-[1.7] pb-4 pr-10">Yes — fully licensed and insured, with over 10 years on the tools. Every completed job is backed by a 12-month workmanship guarantee.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="grain bg-ink relative overflow-hidden">
+  <div class="absolute -top-24 -right-24 w-96 h-96 bg-plum/25 blur-[110px] rounded-full"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid lg:grid-cols-[1fr_1.1fr] gap-10 relative">
+
+    <!-- info panel -->
+    <div class="bg-gradient-to-br from-navy to-plum rounded-2xl p-8 sm:p-10 text-white flex flex-col justify-between reveal">
+      <div>
+        <p class="font-mono text-[11px] tracking-[0.25em] text-white/70 uppercase mb-3">Get in touch</p>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight leading-tight">Talk to our plumbing experts.</h2>
+        <p class="text-white/70 text-sm leading-[1.7] mt-4 max-w-xs">Prefer to call or email directly? We're always reachable.</p>
+      </div>
+      <div class="space-y-5 mt-10">
+        <a href="tel:+27717933414" class="flex items-center gap-3 hover:text-plumlite transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <span class="text-sm font-medium">071 793 3414 (Damien)</span>
+        </a>
+        <a href="mailto:apexplumbingct@gmail.com" class="flex items-center gap-3 hover:text-plumlite transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          </span>
+          <span class="text-sm font-medium">apexplumbingct@gmail.com</span>
+        </a>
+        <a href="https://instagram.com/apexplumbing.ct" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-plumlite transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          </span>
+          <span class="text-sm font-medium">@apexplumbing.ct</span>
+        </a>
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </span>
+          <span class="text-sm font-medium">Emergency callouts — 24/7 <br class="hidden sm:block">Office — Mon–Sat, 7am–6pm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <form id="callback-form" action="mailto:apexplumbingct@gmail.com" method="get" novalidate class="reveal bg-white rounded-2xl p-8 sm:p-10" style="--reveal-delay:120ms">
+      <p class="font-mono text-[11px] tracking-[0.25em] text-plum uppercase mb-3">Request a callback</p>
+      <h3 class="font-display font-bold text-2xl text-ink tracking-tight mb-6">Tell us what's going on.</h3>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-1">
+          <label for="name" class="block text-xs font-medium text-muted mb-1.5">Full name</label>
+          <input id="name" name="Name" type="text" autocomplete="name" required class="w-full rounded-lg border border-navy/15 px-3.5 py-2.5 focus:border-plum transition-colors">
+          <p class="field-error hidden text-red-600 text-xs mt-1">Please enter your name.</p>
+        </div>
+        <div class="sm:col-span-1">
+          <label for="phone" class="block text-xs font-medium text-muted mb-1.5">Phone number</label>
+          <input id="phone" name="Phone" type="tel" autocomplete="tel" inputmode="tel" required class="w-full rounded-lg border border-navy/15 px-3.5 py-2.5 focus:border-plum transition-colors">
+          <p class="field-error hidden text-red-600 text-xs mt-1">Please enter a phone number so we can call you back.</p>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="email" class="block text-xs font-medium text-muted mb-1.5">Email</label>
+          <input id="email" name="Email" type="email" autocomplete="email" inputmode="email" required class="w-full rounded-lg border border-navy/15 px-3.5 py-2.5 focus:border-plum transition-colors">
+          <p class="field-error hidden text-red-600 text-xs mt-1">Please enter a valid email address.</p>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="service" class="block text-xs font-medium text-muted mb-1.5">Service needed</label>
+          <select id="service" name="Service" class="w-full rounded-lg border border-navy/15 px-3.5 py-2.5 bg-white">
+            <option>Emergency callout</option>
+            <option>Geyser repair or install</option>
+            <option>Solar repair or install</option>
+            <option>Blocked drain</option>
+            <option>General maintenance</option>
+            <option>Roofing</option>
+            <option>Painting</option>
+            <option>Bathroom / kitchen renovation</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="message" class="block text-xs font-medium text-muted mb-1.5">Tell us what's happening</label>
+          <textarea id="message" name="Message" rows="4" class="w-full rounded-lg border border-navy/15 px-3.5 py-2.5 resize-none focus:border-plum transition-colors"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-ripple w-full sm:w-auto mt-6 bg-plum text-white font-semibold px-7 py-3.5 rounded-full shadow-[0_20px_45px_-15px_rgba(123,26,124,0.55)] hover:bg-navy active:scale-[0.97] transition-all duration-200">
+        Send request
+      </button>
+
+      <div id="form-status" class="hidden items-start gap-2.5 mt-4 bg-plum/5 border border-plum/15 rounded-xl p-3.5">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7B1A7C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M20 6 9 17l-5-5"/></svg>
+        <p class="text-ink text-sm leading-snug">Opening your email app with these details filled in — hit send there to reach us. Nothing showed up? Call <a href="tel:+27717933414" class="text-plum font-medium">071 793 3414</a> instead.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= EMERGENCY CTA BANNER ================= -->
+<section class="grain relative overflow-hidden bg-gradient-to-br from-plum via-[#5A1A72] to-ink">
+  <div class="absolute -top-24 -left-24 w-96 h-96 bg-plumlite/25 blur-[110px] rounded-full"></div>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-20 sm:py-24 text-center relative reveal">
+    <h2 class="font-display font-bold text-white text-[clamp(2rem,5vw,3.25rem)] tracking-tight leading-[1.05]">
+      Pipe burst? Geyser leaking?<br class="hidden sm:block"> Don't wait it out.
+    </h2>
+    <p class="text-white/70 text-base sm:text-lg mt-5 max-w-lg mx-auto">
+      Call now and talk to Damien or the on-call crew directly — most of Cape Town sees a van within the hour.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mt-9">
+      <a href="tel:+27717933414" class="btn-ripple inline-flex items-center gap-2 bg-white text-plum font-semibold px-7 py-4 rounded-full shadow-[0_20px_45px_-15px_rgba(0,0,0,0.4)] hover:bg-paper active:scale-[0.97] transition-all duration-200 text-base">
+        Call 071 793 3414
+      </a>
+      <a href="mailto:apexplumbingct@gmail.com" class="btn-ripple inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-7 py-4 rounded-full hover:bg-white/10 active:scale-[0.97] transition-all duration-200 text-base">
+        Email instead
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="grain bg-ink text-white/70">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <a href="#top" class="flex items-center gap-2.5 mb-4">
+        <span class="bg-white rounded-full p-1 shrink-0">
+          <img src="brand_assets/logo-icon.png" alt="Apex Plumbing Cape Town logo" class="w-7 h-7 rounded-full object-cover">
+        </span>
+        <span class="font-display font-semibold text-white">APEX PLUMBING</span>
+      </a>
+      <p class="text-sm leading-[1.7] text-white/50 max-w-xs">Cape Town's always-on plumbing crew. Licensed, insured, and on the tools since day one.</p>
+    </div>
+
+    <div>
+      <p class="font-mono text-[11px] tracking-[0.2em] text-plumlite/80 uppercase mb-4">Contact</p>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="tel:+27717933414" class="hover:text-white transition-colors duration-200">071 793 3414 (Damien)</a></li>
+        <li><a href="mailto:apexplumbingct@gmail.com" class="hover:text-white transition-colors duration-200">apexplumbingct@gmail.com</a></li>
+        <li><a href="https://instagram.com/apexplumbing.ct" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">@apexplumbing.ct</a></li>
+        <li class="text-white/50">www.apexplumbingct.co.za</li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-mono text-[11px] tracking-[0.2em] text-plumlite/80 uppercase mb-4">Hours</p>
+      <ul class="space-y-2.5 text-sm text-white/60">
+        <li>Emergency callouts — 24/7</li>
+        <li>Office — Mon–Sat, 7am–6pm</li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-mono text-[11px] tracking-[0.2em] text-plumlite/80 uppercase mb-4">Explore</p>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="#services" class="hover:text-white transition-colors duration-200">Services</a></li>
+        <li><a href="#process" class="hover:text-white transition-colors duration-200">How it works</a></li>
+        <li><a href="#reviews" class="hover:text-white transition-colors duration-200">Reviews</a></li>
+        <li><a href="#tips" class="hover:text-white transition-colors duration-200">Tips</a></li>
+        <li><a href="#faq" class="hover:text-white transition-colors duration-200">FAQ</a></li>
+        <li><a href="#contact" class="hover:text-white transition-colors duration-200">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-xs text-white/40 font-mono">© 2026 Apex Plumbing, Cape Town. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- hero bubbles: rising water bubbles on canvas ---------- */
+  (function () {
+    var canvas = document.getElementById('hero-bubbles');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var bubbles = [];
+
+    function makeBubble(w, h, randomY) {
+      var r = Math.random() * 5 + 1.5;
+      return {
+        x: Math.random() * w,
+        y: randomY ? Math.random() * h : h + r + Math.random() * 40,
+        r: r,
+        speed: (Math.random() * 0.35 + 0.12) * (r / 4),
+        sway: Math.random() * 0.8 + 0.2,
+        phase: Math.random() * Math.PI * 2,
+        alpha: Math.random() * 0.18 + 0.05
+      };
+    }
+
+    function resize() {
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      var count = Math.min(Math.round(rect.width / 22), 70);
+      bubbles = [];
+      for (var i = 0; i < count; i++) bubbles.push(makeBubble(rect.width, rect.height, true));
+    }
+
+    function draw(now) {
+      var w = canvas.width / dpr, h = canvas.height / dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < bubbles.length; i++) {
+        var b = bubbles[i];
+        if (!prefersReducedMotion) {
+          b.y -= b.speed;
+          b.x += Math.sin(now * 0.0008 + b.phase) * b.sway * 0.15;
+          if (b.y < -b.r - 4) bubbles[i] = b = makeBubble(w, h, false);
+        }
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255,255,255,' + b.alpha.toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(b.x - b.r * 0.3, b.y - b.r * 0.3, b.r * 0.25, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + (b.alpha * 0.9).toFixed(3) + ')';
+        ctx.fill();
+      }
+      if (!prefersReducedMotion) requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+  })();
+
+  /* ---------- scroll reveals ---------- */
+  var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ---------- animated counters ---------- */
+  var counters = document.querySelectorAll('.counter');
+  function animateCounter(el) {
+    var target = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    if (prefersReducedMotion) { el.textContent = target.toFixed(decimals); return; }
+    var duration = 1400, start = null;
+    function step(now) {
+      if (start === null) start = now;
+      var t = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = (target * eased).toFixed(decimals);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          cio.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { cio.observe(el); });
+  }
+
+  /* ---------- process pipe draw-in ---------- */
+  var pipeWrap = document.getElementById('pipe-wrap');
+  if (pipeWrap && 'IntersectionObserver' in window) {
+    var pio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          pipeWrap.classList.add('pipe-on');
+          pio.unobserve(pipeWrap);
+        }
+      });
+    }, { threshold: 0.3 });
+    pio.observe(pipeWrap);
+  }
+
+  /* ---------- pressure gauge + header state + progress bar + float button ---------- */
+  var fill = document.getElementById('pressure-fill');
+  var drop = document.getElementById('pressure-drop');
+  var header = document.getElementById('site-header');
+  var progress = document.getElementById('scroll-progress');
+  var floatCall = document.getElementById('float-call');
+
+  function onScroll() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? Math.min(window.scrollY / max, 1) * 100 : 0;
+    if (fill) fill.style.height = pct + '%';
+    if (drop) drop.style.bottom = pct + '%';
+    if (progress) progress.style.width = pct + '%';
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (floatCall) floatCall.classList.toggle('is-on', window.scrollY > 500);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- live clock ---------- */
+  var clock = document.getElementById('live-clock');
+  function tick() {
+    if (!clock) return;
+    var now = new Date();
+    clock.textContent = '· ' + now.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  /* ---------- button ripple ---------- */
+  document.querySelectorAll('.btn-ripple').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var rect = btn.getBoundingClientRect();
+      var size = Math.max(rect.width, rect.height) * 1.8;
+      var span = document.createElement('span');
+      span.className = 'ripple-el';
+      span.style.width = span.style.height = size + 'px';
+      span.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      span.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      btn.appendChild(span);
+      span.addEventListener('animationend', function () { span.remove(); });
+    });
+  });
+
+  /* ---------- mobile menu ---------- */
+  var menuToggle = document.getElementById('menu-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function () {
+      var isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.style.maxHeight = isOpen ? '0px' : mobileMenu.scrollHeight + 'px';
+      mobileMenu.style.opacity = isOpen ? '0' : '1';
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.style.maxHeight = '0px';
+        mobileMenu.style.opacity = '0';
+      });
+    });
+  }
+
+  /* ---------- FAQ: one open at a time ---------- */
+  var faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(function (item) {
+    item.addEventListener('toggle', function () {
+      if (item.open) {
+        faqItems.forEach(function (other) {
+          if (other !== item) other.open = false;
+        });
+      }
+    });
+  });
+
+  /* ---------- callback form: validate then hand off to mailto ---------- */
+  var form = document.getElementById('callback-form');
+  var formStatus = document.getElementById('form-status');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      var valid = true;
+      ['name', 'phone', 'email'].forEach(function (id) {
+        var input = document.getElementById(id);
+        var error = input.parentElement.querySelector('.field-error');
+        var ok = input.value.trim() !== '' && (id !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value));
+        error.classList.toggle('hidden', ok);
+        input.classList.toggle('border-red-400', !ok);
+        if (!ok) valid = false;
+      });
+      if (!valid) { e.preventDefault(); return; }
+      if (formStatus) { formStatus.classList.remove('hidden'); formStatus.classList.add('flex'); }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
