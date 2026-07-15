@@ -164,6 +164,7 @@
       <a href="#services" class="hover:text-plum transition-colors duration-200">Services</a>
       <a href="#about" class="hover:text-plum transition-colors duration-200">About</a>
       <a href="#process" class="hover:text-plum transition-colors duration-200">How it works</a>
+      <a href="#work" class="hover:text-plum transition-colors duration-200">Recent work</a>
       <a href="#reviews" class="hover:text-plum transition-colors duration-200">Reviews</a>
       <a href="#resources" class="hover:text-plum transition-colors duration-200">Resources</a>
       <a href="#faq" class="hover:text-plum transition-colors duration-200">FAQ</a>
@@ -188,6 +189,7 @@
       <a href="#services" class="py-2.5 border-b border-navy/5">Services</a>
       <a href="#about" class="py-2.5 border-b border-navy/5">About</a>
       <a href="#process" class="py-2.5 border-b border-navy/5">How it works</a>
+      <a href="#work" class="py-2.5 border-b border-navy/5">Recent work</a>
       <a href="#reviews" class="py-2.5 border-b border-navy/5">Reviews</a>
       <a href="#resources" class="py-2.5 border-b border-navy/5">Resources</a>
       <a href="#faq" class="py-2.5 border-b border-navy/5">FAQ</a>
@@ -254,15 +256,8 @@
 
     <!-- hero visual: droplet cluster -->
     <div class="hero-stage relative mx-auto w-full max-w-md lg:max-w-none" style="--stage:300ms">
-      <!-- PHOTO SLOT · HERO — when the new photo arrives, replace the inner
-           div's contents with: <img src="brand_assets/YOUR-PHOTO.jpg" alt="..."
-           class="w-full h-full object-cover"> -->
       <div class="droplet drop-bob relative aspect-[4/4.6] bg-gradient-to-br from-navy via-plum to-orchid shadow-[0_40px_80px_-35px_rgba(27,47,106,0.55)]">
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-10">
-          <img src="brand_assets/logo-icon.png" alt="" aria-hidden="true" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white/25 shadow-lg">
-          <p class="font-display font-bold text-white text-xl sm:text-2xl mt-5 leading-snug">Your local crew,<br>on tap 24/7.</p>
-          <p class="text-white/70 text-sm mt-2">Emergencies, geysers, drains &amp; more</p>
-        </div>
+        <img src="brand_assets/van-sunset.jpg" alt="The Apex Plumbing van parked by the sea at sunset in Cape Town" class="absolute inset-0 w-full h-full object-cover">
         <!-- gentle highlight -->
         <div class="absolute top-6 left-8 w-20 h-20 bg-white/15 rounded-full blur-2xl" aria-hidden="true"></div>
       </div>
@@ -390,12 +385,8 @@
 <!-- ================= ABOUT / MEET DAMIEN ================= -->
 <section id="about" class="bg-white border-y border-navy/8">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center">
-    <!-- PHOTO SLOT · DAMIEN — replace the inner contents with:
-         <img src="brand_assets/YOUR-PHOTO.jpg" alt="Damien, owner of Apex Plumbing"
-         class="w-full h-full object-cover"> -->
-    <div class="droplet-c reveal w-48 h-48 sm:w-60 sm:h-60 mx-auto lg:mx-0 shrink-0 bg-gradient-to-br from-plum to-navy flex items-center justify-center">
-      <span class="font-display font-bold text-white text-7xl sm:text-8xl" aria-hidden="true">D</span>
-      <span class="sr-only">Damien, owner of Apex Plumbing</span>
+    <div class="droplet-c reveal w-48 h-48 sm:w-60 sm:h-60 mx-auto lg:mx-0 shrink-0 bg-gradient-to-br from-plum to-navy shadow-[0_30px_60px_-25px_rgba(27,47,106,0.45)]">
+      <img src="brand_assets/damien-at-work.jpg" alt="Damien, owner of Apex Plumbing, fitting a bath mixer tap" class="w-full h-full object-cover">
     </div>
 
     <div class="reveal" style="--reveal-delay:100ms">
@@ -441,6 +432,36 @@
       <h3 class="font-display font-semibold text-lg text-ink mb-2">Fixed right, guaranteed</h3>
       <p class="text-slate2 text-sm leading-[1.7]">Workmanship backed for 12 months on every completed job, big or small.</p>
     </div>
+  </div>
+</section>
+
+<!-- ================= RECENT WORK ================= -->
+<section id="work" class="max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-28">
+  <div class="max-w-xl mb-12 reveal">
+    <p class="text-plum font-semibold text-sm mb-3">Straight from the job</p>
+    <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink tracking-tight">Work we're proud of.</h2>
+    <p class="text-slate2 text-base leading-[1.75] mt-4">No stock photos here — these are real jobs around Cape Town, shot on the crew's own phones.</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-6 max-w-4xl">
+    <figure class="card-lift reveal bg-white rounded-3xl border border-navy/8 p-3 pb-5" style="--reveal-delay:0ms">
+      <div class="rounded-2xl overflow-hidden aspect-[3/4]">
+        <img src="brand_assets/sink-install.jpg" alt="Newly installed double kitchen sink and chrome mixer tap with water running" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+      </div>
+      <figcaption class="flex items-center gap-2.5 mt-4 px-2">
+        <span class="w-2 h-2 rounded-full bg-plum shrink-0" aria-hidden="true"></span>
+        <p class="text-ink text-sm font-medium">Kitchen sink &amp; mixer install — flowing perfectly</p>
+      </figcaption>
+    </figure>
+    <figure class="card-lift reveal bg-white rounded-3xl border border-navy/8 p-3 pb-5" style="--reveal-delay:100ms">
+      <div class="rounded-2xl overflow-hidden aspect-[3/4]">
+        <img src="brand_assets/geyser-install.jpg" alt="The Apex Plumbing crew installing a geyser from scaffolding in an apartment block" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+      </div>
+      <figcaption class="flex items-center gap-2.5 mt-4 px-2">
+        <span class="w-2 h-2 rounded-full bg-plum shrink-0" aria-hidden="true"></span>
+        <p class="text-ink text-sm font-medium">Geyser swap in a Cape Town apartment block</p>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -659,11 +680,23 @@
           </span>
           <span class="text-sm font-medium">apexplumbingct@gmail.com</span>
         </a>
+        <a href="https://wa.me/27717933414?text=Hi%20Damien%2C%20I%20need%20some%20plumbing%20help" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-orchid transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          </span>
+          <span class="text-sm font-medium">WhatsApp us — 071 793 3414</span>
+        </a>
         <a href="https://instagram.com/apexplumbing.ct" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-orchid transition-colors duration-200">
           <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
           </span>
-          <span class="text-sm font-medium">@apexplumbing.ct</span>
+          <span class="text-sm font-medium">@apexplumbing.ct on Instagram</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=100095090899342" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-orchid transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </span>
+          <span class="text-sm font-medium">Apex Plumbing CT on Facebook</span>
         </a>
         <div class="flex items-center gap-3">
           <span class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
@@ -750,6 +783,12 @@
 
 </main>
 
+<!-- floating WhatsApp button -->
+<a href="https://wa.me/27717933414?text=Hi%20Damien%2C%20I%20need%20some%20plumbing%20help" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"
+   class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-[#25D366] shadow-[0_18px_40px_-12px_rgba(37,211,102,0.65)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform duration-200">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
 <!-- ================= FOOTER ================= -->
 <footer class="bg-ink text-white/70">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -761,6 +800,17 @@
         <span class="font-display font-semibold text-white">Apex Plumbing</span>
       </a>
       <p class="text-sm leading-[1.7] text-white/50 max-w-xs">Cape Town's friendly, always-on plumbing crew. Licensed, insured, and on the tools since day one.</p>
+      <div class="flex items-center gap-3 mt-5">
+        <a href="https://wa.me/27717933414?text=Hi%20Damien%2C%20I%20need%20some%20plumbing%20help" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" class="w-9 h-9 rounded-full bg-white/10 hover:bg-plum flex items-center justify-center transition-colors duration-200">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+        <a href="https://instagram.com/apexplumbing.ct" target="_blank" rel="noopener" aria-label="Follow on Instagram" class="w-9 h-9 rounded-full bg-white/10 hover:bg-plum flex items-center justify-center transition-colors duration-200">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=100095090899342" target="_blank" rel="noopener" aria-label="Find us on Facebook" class="w-9 h-9 rounded-full bg-white/10 hover:bg-plum flex items-center justify-center transition-colors duration-200">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
     </div>
 
     <div>
@@ -768,7 +818,9 @@
       <ul class="space-y-2.5 text-sm">
         <li><a href="tel:+27717933414" class="hover:text-white transition-colors duration-200">071 793 3414 (Damien)</a></li>
         <li><a href="mailto:apexplumbingct@gmail.com" class="hover:text-white transition-colors duration-200">apexplumbingct@gmail.com</a></li>
+        <li><a href="https://wa.me/27717933414" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">WhatsApp — 071 793 3414</a></li>
         <li><a href="https://instagram.com/apexplumbing.ct" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">@apexplumbing.ct</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=100095090899342" target="_blank" rel="noopener" class="hover:text-white transition-colors duration-200">Apex Plumbing CT on Facebook</a></li>
         <li class="text-white/50">www.apexplumbingct.co.za</li>
       </ul>
     </div>
@@ -787,6 +839,7 @@
         <li><a href="#services" class="hover:text-white transition-colors duration-200">Services</a></li>
         <li><a href="#about" class="hover:text-white transition-colors duration-200">About</a></li>
         <li><a href="#process" class="hover:text-white transition-colors duration-200">How it works</a></li>
+        <li><a href="#work" class="hover:text-white transition-colors duration-200">Recent work</a></li>
         <li><a href="#reviews" class="hover:text-white transition-colors duration-200">Reviews</a></li>
         <li><a href="#resources" class="hover:text-white transition-colors duration-200">Resources</a></li>
         <li><a href="#contact" class="hover:text-white transition-colors duration-200">Contact</a></li>
