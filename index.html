@@ -3,6 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============ security ============
+     connect-src and form-action are the ones that matter for the callback
+     form: even if a script were injected into this page, it could not post
+     the visitor's details anywhere except FormSubmit.
+
+     'unsafe-eval' is required by the Tailwind play CDN. To drop it, compile
+     Tailwind to a static stylesheet and remove the cdn.tailwindcss.com script.
+
+     frame-ancestors and X-Content-Type-Options cannot be set from a meta tag —
+     add them as real response headers at the host to finish the job:
+       Content-Security-Policy: frame-ancestors 'none'
+       X-Content-Type-Options: nosniff
+       Strict-Transport-Security: max-age=31536000; includeSubDomains -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: https:;
+  connect-src 'self' https://formsubmit.co;
+  form-action 'self' https://formsubmit.co;
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
 <title>Apex Plumbing Cape Town — Friendly 24/7 Plumbers, Geysers &amp; Home Care</title>
 <meta name="description" content="Apex Plumbing is Cape Town's friendly, always-on plumbing crew. Call Damien directly — 24/7 emergencies, geysers, solar, drains, maintenance and renovations, with upfront pricing.">
 
@@ -1055,17 +1083,21 @@
   });
 
   /* ================= callback form =================
-     Submits over HTTPS to a form endpoint via fetch — the visitor's
-     data never rides through their own mail client, and the inbox
-     address is not sitting in the markup for scrapers to harvest.
+     Submits over HTTPS to FormSubmit's AJAX endpoint — the lead never
+     rides through the visitor's own mail client, and the request never
+     leaves the page.
 
-     SETUP: paste your endpoint below (Formspree, Web3Forms, Basin,
-     a Netlify function — anything that accepts a JSON POST).
-       e.g. 'https://formspree.io/f/xxxxxxxx'
-     Leave it empty and the form falls back to opening a mail draft,
-     so the site keeps working until you wire it up. */
-  var FORM_ENDPOINT = '';
+     ONE-TIME ACTIVATION: the first submission triggers a confirmation
+     email to the inbox below. Click the link in it once and the form is
+     live for good.
+
+     HARDENING (optional): once activated, FormSubmit issues a hashed
+     alias so the address stops appearing in this file. Swap it in:
+       var FORM_ENDPOINT = 'https://formsubmit.co/ajax/abc123hash';
+     Any endpoint taking a JSON POST works here — Formspree, Web3Forms,
+     Basin, a Netlify function. */
   var FALLBACK_MAILBOX = ['apexplumbingct', 'gmail.com'].join('@');
+  var FORM_ENDPOINT    = 'https://formsubmit.co/ajax/' + FALLBACK_MAILBOX;
   var MIN_FILL_SECONDS = 3;   /* faster than this = almost certainly a bot */
 
   var form = document.getElementById('callback-form');
@@ -1164,27 +1196,17 @@
     }
 
     var payload = {
-      name:    document.getElementById('name').value.trim(),
-      phone:   document.getElementById('phone').value.trim(),
-      email:   document.getElementById('email').value.trim(),
-      service: document.getElementById('service').value,
-      message: message ? message.value.trim() : '',
-      subject: 'Callback request — Apex Plumbing website'
+      Name:    document.getElementById('name').value.trim(),
+      Phone:   document.getElementById('phone').value.trim(),
+      Email:   document.getElementById('email').value.trim(),
+      Service: document.getElementById('service').value,
+      Message: message ? message.value.trim() : '',
+      _subject:  'Callback request — Apex Plumbing website',
+      _template: 'table',
+      _captcha:  'false',   /* our honeypot + timing gate cover this, and the
+                               interstitial captcha page breaks an AJAX post */
+      _honey:    ''          /* second-layer trap on FormSubmit's side */
     };
-
-    /* no endpoint configured yet: open a mail draft so the lead isn't lost */
-    if (!FORM_ENDPOINT) {
-      var body = 'Name: ' + payload.name +
-                 '\nPhone: ' + payload.phone +
-                 '\nEmail: ' + payload.email +
-                 '\nService: ' + payload.service +
-                 '\n\n' + payload.message;
-      window.location.href = 'mailto:' + FALLBACK_MAILBOX +
-        '?subject=' + encodeURIComponent(payload.subject) +
-        '&body=' + encodeURIComponent(body);
-      setStatus('ok', 'Opening your email app with these details filled in — hit send there to reach us. Nothing showed up? ' + CALL_HTML + ' instead.');
-      return;
-    }
 
     setBusy(true);
     fetch(FORM_ENDPOINT, {
@@ -1193,7 +1215,15 @@
       body: JSON.stringify(payload)
     })
       .then(function (res) {
-        if (!res.ok) throw new Error('Request failed: ' + res.status);
+        return res.json().catch(function () { return {}; })
+          .then(function (data) {
+            /* FormSubmit reports success as the string "true" */
+            var ok = res.ok && (data.success === 'true' || data.success === true);
+            if (!ok) throw new Error(data.message || 'Request failed: ' + res.status);
+            return data;
+          });
+      })
+      .then(function () {
         form.reset();
         if (counter) counter.textContent = '0';
         Object.keys(RULES).forEach(function (id) {
@@ -1206,7 +1236,12 @@
         setStatus('ok', 'Got it — we\'ll ring you back today. For anything urgent, ' + CALL_HTML + ' right now.');
       })
       .catch(function () {
-        setStatus('warn', 'That didn\'t go through — please ' + CALL_HTML + ' or email us directly.');
+        /* network down, endpoint unreachable, or activation still pending —
+           hand the visitor a working route out rather than a dead end */
+        setStatus('warn',
+          'That didn\'t go through — please ' + CALL_HTML +
+          ' or <a href="mailto:' + FALLBACK_MAILBOX +
+          '" class="text-plum font-semibold underline underline-offset-2">email us directly</a>.');
       })
       .finally(function () { setBusy(false); });
   });
